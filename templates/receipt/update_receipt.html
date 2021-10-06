@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container">
+    <h3>Update receipt</h3>
+    <br>
+    <form action="{% url 'update_receipt' receipt.id %}" method="POST">
+        {% csrf_token %}
+        <label for="">Date</label>
+        <input class = "form-control" type="date" name="date" id="" value="{{receipt.date |date:'Y-m-d' }}" >
+        <br>
+        <label for="">Description</label>
+        <input class = "form-control" type="text" name="description" id="" value="{{receipt.description}}">
+        <br>
+        <label for="">Wheat</label>
+        <input class = "form-control" type="number" name="wheat" id="" value="{{receipt.wheat}}">
+        <br>
+        <label for="">Rice</label>
+        <input class = "form-control" type="number" name="rice" id="" value="{{receipt.rice}}">
+        <br>
+        <label for="">Combo</label>
+        <input class = "form-control" type="number" name="combo" id="" value="{{receipt.combo}}">
+        <br>
+
+        <button class = "btn btn-success" type="submit">Update</button>
+        
+        <a class = "btn btn-danger" href="{% url 'delete_receipt' receipt.id %}"><i class="fas fa-trash"></i></a>
+        <a class = "btn btn-primary" href="{% url 'stock_receipt' %}">Back</a>
+        
+        </form>
+</div>
+
+{% endblock content %}

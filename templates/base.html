@@ -1,42 +1,77 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href={% static "css/style.css" %}>
-</head>
-<body>
-    <nav id='menu'>
-        <input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
-        <ul>
-          <li><a href='#'>Home</a></li>
-          <li><a class='dropdown-arrow' href='#'>Students</a>
-            <ul class='sub-menus'>
-              <li><a href='#'>Class (1->5)</a></li>
-              <li><a href='#'>Class (6->8)</a></li>
-              
-            </ul>
-          </li>
-          <li><a href='#'>Stock Overview</a></li>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock portal</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    
+    
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">GSS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home
+                <span class="visually-hidden">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Students</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Class (1->5)</a>
+                <a class="dropdown-item" href="#">Class (6->8)</a>
+                
+                <!-- <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a> -->
+              </div>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="#">Meal calculator</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Stock overview</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Update stock</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'stock_receipt' %}">Add receipt</a>
+                <a class="dropdown-item" href="{% url 'stock_exp' %}">Add consumption</a>
+                
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">View summary</a>
+              </div>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
 
-          <li><a class='dropdown-arrow' href='#'>Update Stock</a>
-            <ul class='sub-menus'>
-              <li><a href='#'>Stock receipt</a></li>
-              <li><a href='#'>Stock consumption</a></li>
-              
-            </ul>
-          </li>
-          <li><a href='#'>Contact Us</a></li>
-        </ul>
-      </nav>
+    {% block content %} {% endblock %}
+    
+    
 
-      {% block content %}
-
-      {% endblock %}
-
-      <script src="{% static 'js/main.js' %}"></script>
-</body>
+    
+    
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
 </html>

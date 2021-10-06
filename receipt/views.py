@@ -1,42 +1,42 @@
 from django.shortcuts import redirect, render
-from .models import Consumption
+from .models import Receipt
 
 # Create your views here.
 def index(request):
     if request.method=="GET":
-        exp = Consumption.objects.filter(owner = request.user)
+        receipt = Receipt.objects.filter(owner = request.user)
         wheatsum = 0
         ricesum = 0
         combosum = 0
-        for i in exp:
+        for i in receipt:
             wheatsum+=i.wheat
             ricesum+=i.rice
             combosum+=i.combo
         context = {
-            "exps":exp,
+            "receipts":receipt,
             'wheatsum':wheatsum,
             'ricesum':ricesum,
             'combosum':combosum
         }
-        return render(request,'consumption/stock_exp.html',context)
+        return render(request,'receipt/stock_receipt.html',context)
     if request.method=="POST":
         dor = request.POST['date']
         description = request.POST['description']
         wheat = request.POST['wheat']
         rice = request.POST['rice']
         combo = request.POST['combo']
-        new_exp = Consumption.objects.create(owner=request.user,date=dor,description=description,wheat = wheat,rice=rice,combo = combo)
-        new_exp.save()
-        return redirect('stock_exp')
+        new_receipt = Receipt.objects.create(owner=request.user,date=dor,description=description,wheat = wheat,rice=rice,combo = combo)
+        new_receipt.save()
+        return redirect('stock_receipt')
 
 
-def update_exp(request,id):
-    exp = Consumption.objects.get(pk=id)
+def update_receipt(request,id):
+    receipt = Receipt.objects.get(pk=id)
     context = {
-        'exp': exp
+        'receipt': receipt
     }
     if request.method=="GET":
-        return render(request,"consumption/update_exp.html",context)
+        return render(request,"receipt/update_receipt.html",context)
 
     if request.method=="POST":
         dor = request.POST['date']
@@ -44,21 +44,21 @@ def update_exp(request,id):
         wheat = request.POST['wheat']
         rice = request.POST['rice']
         combo = request.POST['combo']
-        exp.owner=request.user
-        exp.date=dor
-        exp.description=description
-        exp.wheat = wheat
-        exp.rice=rice
-        exp.combo = combo
-        exp.save()
+        receipt.owner=request.user
+        receipt.date=dor
+        receipt.description=description
+        receipt.wheat = wheat
+        receipt.rice=rice
+        receipt.combo = combo
+        receipt.save()
     
-        return redirect('stock_exp')
+        return redirect('stock_receipt')
         
-def delete_exp(request, id):
-    exp = Consumption.objects.get(pk=id)
-    exp.delete()
+def delete_receipt(request, id):
+    receipt = Receipt.objects.get(pk=id)
+    receipt.delete()
     # messages.success(request, "Expense removed")
-    return redirect('stock_exp')
+    return redirect('stock_receipt')
 
 
 # def search_dates(request,startdate,enddate):

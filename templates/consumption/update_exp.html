@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container">
+    <h3>Update Consumption</h3>
+    <br>
+    <form action="{% url 'update_exp' exp.id %}" method="POST">
+        {% csrf_token %}
+        <label for="">Date</label>
+        <input class = "form-control" type="date" name="date" id="" value="{{exp.date |date:'Y-m-d' }}" >
+        <br>
+        <label for="">Description</label>
+        <input class = "form-control" type="text" name="description" id="" value="{{exp.description}}">
+        <br>
+        <label for="">Wheat</label>
+        <input class = "form-control" type="number" name="wheat" id="" value="{{exp.wheat}}">
+        <br>
+        <label for="">Rice</label>
+        <input class = "form-control" type="number" name="rice" id="" value="{{exp.rice}}">
+        <br>
+        <label for="">Combo</label>
+        <input class = "form-control" type="number" name="combo" id="" value="{{exp.combo}}">
+        <br>
+
+        <button class = "btn btn-success" type="submit">Update</button>
+        
+        <a class = "btn btn-danger" href="{% url 'delete_exp' exp.id %}"><i class="fas fa-trash"></i></a>
+        <a class = "btn btn-primary" href="{% url 'stock_exp' %}">Back</a>
+        
+        </form>
+</div>
+
+{% endblock content %}
