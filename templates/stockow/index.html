@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container m-2">
+  <form action="{% url 'search_between_all' %}" method="post">
+    {% csrf_token %}
+  <label for="">Start date</label>
+  <input type="date" name="datef" id="datef" required>
+  <label for="">End date</label>
+  <input type="date" name="datet" id="datet" required>
+  <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+  
+  <!-- predefined dates view  -->
+
+  <a class="dropdown-toggle btn btn-primary" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">View data of</a>
+<div class="dropdown-menu">
+  <a class="dropdown-item" href="{% url 'search_last_seven_days_all' %}">Last 7 days</a>
+  <a class="dropdown-item" href="{% url 'search_this_month_all' %}">This month</a>
+  <a class="dropdown-item" href="{% url 'search_last_month_all' %}">Last month</a>
+  
+  <div class="dropdown-divider"></div>
+  <a class="dropdown-item" href="{% url 'search_this_year_all' %}">This year</a>
+  <a class="dropdown-item" href="{% url 'stock_overview' %}">All</a>
+</div>
+  
+</form>
+</div>
+
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Type</th>
+      <th scope="col">Date</th>
+      <th scope="col">Description</th>
+      <th scope="col">Wheat</th>
+      <th scope="col">Rice</th>
+      <th scope="col">Combo</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% comment %} {% for receipt in receipts %}
+    <tr class="table-success">
+      <th scope="row">Receipt</th>
+      <td>{{receipt.date}}</td>
+      <td>{{receipt.description}}</td>
+      <td>{{receipt.wheat}}</td>
+      <td>{{receipt.rice}}</td>
+      <td>{{receipt.combo}}</td>
+    </tr>
+    {% endfor %}
+    {% for exp in exps %}
+    <tr class="table-danger">
+      <th scope="row">Consumption</th>
+      <td>{{exp.date}}</td>
+      <td>{{exp.description}}</td>
+      <td>{{exp.wheat}}</td>
+      <td>{{exp.rice}}</td>
+      <td>{{exp.combo}}</td>
+    </tr>
+    
+    {% endfor %} {% endcomment %}
+
+    {% for stock in stocks %}
+      {% if stock.operation == 'receipt' %}
+      <tr class="table-success">
+        <th scope="row">receipt</th>
+        <td>{{stock.date}}</td>
+        <td>{{stock.description}}</td>
+        <td>{{stock.wheat}}</td>
+        <td>{{stock.rice}}</td>
+        <td>{{stock.combo}}</td>
+      </tr>
+      {% else %}
+      <tr class="table-danger">
+        <th scope="row">consumption</th>
+        <td>{{stock.date}}</td>
+        <td>{{stock.description}}</td>
+        <td>{{stock.wheat}}</td>
+        <td>{{stock.rice}}</td>
+        <td>{{stock.combo}}</td>
+      </tr>
+
+      {% endif %}
+    {% endfor %}
+    
+    <tr class="table-info">
+      <th scope="row">Total stock available on -></th>
+      <td>{{today}}</td>
+      <td>Net</td>
+      <td>{{netwheat}}</td>
+      <td>{{netrice}}</td>
+      <td>{{netcombo}}</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+{% endblock content %}

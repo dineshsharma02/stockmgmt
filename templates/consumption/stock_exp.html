@@ -1,38 +1,55 @@
+{% extends 'base.html' %}
 {% load static %}
-{% include 'base.html' %}
 {% block content %}
-<h3>View Consumption | <a href="#add_exp">Add consumption</a></h3>
+<h3>View Consumption</h3>
+<hr>
 
 <div class="container m-2">
-  <form action="#" method="post">
+  <form action="{% url 'search_between_exp' %}" method="post">
     {% csrf_token %}
   <label for="">Start date</label>
-  <input type="date" name="startdate" id="">
+  <input type="date" name="datef" id="datepicker" required>
   <label for="">End date</label>
-  <input type="date" name="enddate" id="">
+  <input type="date" name="datet" id="datepicker" required>
   <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-</form>
+  
+  <!-- predefined dates view  -->
 
+  <a class="dropdown-toggle btn btn-primary" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">View data of</a>
+<div class="dropdown-menu">
+  <a class="dropdown-item" href="{% url 'search_last_seven_days_exp' %}">Last 7 days</a>
+  <a class="dropdown-item" href="{% url 'search_this_month_exp' %}">This month</a>
+  <a class="dropdown-item" href="{% url 'search_last_month_exp' %}">Last month</a>
+  
+  <div class="dropdown-divider"></div>
+  <a class="dropdown-item" href="{% url 'search_this_year_exp' %}">This year</a>
+  <a class="dropdown-item" href="{% url 'stock_exp' %}">All</a>
+</div>
+  
+</form>
 </div>
 
+
+
 <table style="width: 100%;">
-    <thead>
+    <thead class="table-dark">
       <tr>
         <th rowspan="2">Date</th>
         <th rowspan="2">Description</th>
-        <th colspan="3">Consumption</th>
+        <th colspan="3" style="text-align: center;">Consumption</th>
+        <th colspan="2" rowspan="2">Action</th>
         
       </tr>
       <tr>
         <th>Wheat(Kg)</th>
         <th>Rice(Kg)</th>
         <th>Combo(Kg)</th>
-        <th colspan="2">Action</th>
+        
         
       </tr>
     </thead>
     <tbody>
-      <tr id="add_exp">
+      <tr id="add_exp" class="table-info">
         <form action= "{% url 'stock_exp' %}" method="post">
         {% csrf_token %}
         <td><input type="date" placeholder="date" name="date" required></td>
@@ -42,21 +59,22 @@
         <td><input type="number" placeholder="Rice(Kg)" name = "rice" required></td>
         <td><input type="number" placeholder="Combo" name="combo" required></td>
         <td><button class = "btn btn-success" type="submit"><i class="fas fa-plus "></i></button></td>
+        <td></td>
         </form>
          
       </tr>
 
       {% for exp in exps %}
-      <tr>
+      <tr class = "table-danger">
         <td>{{exp.date}}</td>
         <td>{{exp.description}}</td>
         <td>{{exp.wheat}}</td>
         <td>{{exp.rice}}</td>
         <td>{{exp.combo}}</td>
-        <td><a class = "btn btn-primary" href="{% url 'update_exp' exp.id %}"><i class="far fa-edit"></i></a>
-          <a class = "btn btn-danger" href="{% url 'delete_exp' exp.id %}"><i class="fas fa-trash"></i></a>
+        <td><a class = "btn btn-primary" href="{% url 'update_exp' exp.id %}"><i class="far fa-edit"></i></a></td>
+        <td><a class = "btn btn-danger" href="{% url 'delete_exp' exp.id %}"><i class="fas fa-trash"></i></a></td>
           
-        </td>
+        
         
         <!-- <a class = "btn btn-primary" href="#">Delete</a> -->
        
@@ -64,12 +82,14 @@
      
       {% endfor %}
       {% if  exps %}
-      <tr style="border-top: 5px solid black ;border-bottom: 5px solid black ;">
+      <tr class="table-dark" >
         <td>Sum(Only of exp stock)</td>
         <td>-</td>
         <td>{{wheatsum}}</td>
         <td>{{ricesum}}</td>
         <td>{{combosum}}</td>
+        <td></td>
+        <td></td>
         
         
         <!-- <a class = "btn btn-primary" href="#">Delete</a> -->
@@ -82,7 +102,7 @@
   </table>
 
   
-
+<br><br>
 
 
 

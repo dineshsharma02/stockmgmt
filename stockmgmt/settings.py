@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'receipt',
     'students',
-    'consumption'
+    'consumption',
+    'stockoverview'
 ]
 
 MIDDLEWARE = [
