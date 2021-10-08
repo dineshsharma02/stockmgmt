@@ -6,6 +6,3 @@ function updatemenu() {
       document.getElementById('menu').style.borderRadius = '10px';
     }
 }
-
-
-$('input[name="dates"]').daterangepicker();  

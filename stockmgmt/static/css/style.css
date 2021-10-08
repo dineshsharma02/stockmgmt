@@ -1,10 +1,15 @@
 table,
 th,
 td {
-  padding: 10px;
-  /* border: 1px solid black;
-  border-collapse: collapse; */
+	width: 100%;
+	
+   /* border: 1px solid black; */
+  /*border-collapse: collapse; */
 }
+td{
+	padding: 10px;
+}
+
 
 
 
@@ -117,5 +122,15 @@ td {
 	background-color: #343a40;
 	color: #cbcfd4;
 	height: 70px;
+}
+
+#searchField{
+	background-color: #444444;
+	width: 50%;
+	border-radius: 10px;
+	
+	color: white;
+	margin-left: auto;
+	margin-right: auto;
 }
 

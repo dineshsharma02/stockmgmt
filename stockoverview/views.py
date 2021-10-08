@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-
+import json
 import receipt
 from .models import Stock
 from operator import attrgetter
@@ -7,6 +7,7 @@ from itertools import chain
 from datetime import date,timedelta
 import datetime
 import calendar
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -176,3 +177,15 @@ def search_this_year(request):
     }
     return render(request,'stockow/index.html',context)
 
+def search_in_overview(request):
+    if request.method == 'POST':
+        search_str = json.loads(request.body).get('searchText')
+        stock = Stock.objects.filter(wheat__istartswith=search_str, owner=request.user) |   Stock.objects.filter(
+                                    rice__istartswith=search_str, owner=request.user) | Stock.objects.filter(
+                                    combo__istartswith=search_str, owner=request.user) | Stock.objects.filter(
+                                    date__istartswith=search_str, owner=request.user) | Stock.objects.filter(
+                                    description__icontains=search_str, owner=request.user) | Stock.objects.filter(
+                                    operation__icontains=search_str, owner=request.user)
+
+        data = stock.values()
+        return JsonResponse(list(data),safe=False)

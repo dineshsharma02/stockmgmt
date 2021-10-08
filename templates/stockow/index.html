@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<br>
 <div class="container m-2">
   <form action="{% url 'search_between_all' %}" method="post">
     {% csrf_token %}
@@ -25,12 +25,14 @@
   
 </form>
 </div>
+<br>
+<input class="form-control" type="text" name="searchField" id="searchField" placeholder="Search Any Entry">
 
+<br><br>
 
-
-<table class="table table-hover">
+<table class="table table-hover app-table" style="width: 100%;">
   <thead>
-    <tr>
+    <tr class="table-dark">
       <th scope="col">Type</th>
       <th scope="col">Date</th>
       <th scope="col">Description</th>
@@ -42,32 +44,12 @@
   </thead>
   <tbody>
     
-    {% comment %} {% for receipt in receipts %}
-    <tr class="table-success">
-      <th scope="row">Receipt</th>
-      <td>{{receipt.date}}</td>
-      <td>{{receipt.description}}</td>
-      <td>{{receipt.wheat}}</td>
-      <td>{{receipt.rice}}</td>
-      <td>{{receipt.combo}}</td>
-    </tr>
-    {% endfor %}
-    {% for exp in exps %}
-    <tr class="table-danger">
-      <th scope="row">Consumption</th>
-      <td>{{exp.date}}</td>
-      <td>{{exp.description}}</td>
-      <td>{{exp.wheat}}</td>
-      <td>{{exp.rice}}</td>
-      <td>{{exp.combo}}</td>
-    </tr>
     
-    {% endfor %} {% endcomment %}
 
     {% for stock in stocks %}
       {% if stock.operation == 'receipt' %}
       <tr class="table-success">
-        <th scope="row">receipt</th>
+        <th>receipt</th>
         <td>{{stock.date}}</td>
         <td>{{stock.description}}</td>
         <td>{{stock.wheat}}</td>
@@ -76,7 +58,7 @@
       </tr>
       {% else %}
       <tr class="table-danger">
-        <th scope="row">consumption</th>
+        <th>consumption</th>
         <td>{{stock.date}}</td>
         <td>{{stock.description}}</td>
         <td>{{stock.wheat}}</td>
@@ -87,8 +69,8 @@
       {% endif %}
     {% endfor %}
     
-    <tr class="table-info">
-      <th scope="row">Total stock available on -></th>
+    <tr class="table-dark">
+      <th>Total stock available on -></th>
       <td>{{today}}</td>
       <td>Net</td>
       <td>{{netwheat}}</td>
@@ -98,5 +80,28 @@
     
   </tbody>
 </table>
+
+<h4 class="item-not-found">Item Not Found</h4>
+
+
+<table class="table table-hover" id="table-output" style="width: 100%;">
+  <thead>
+    <tr class="table-dark">
+      <th scope="col">Type</th>
+      <th scope="col">Date</th>
+      <th scope="col">Description</th>
+      <th scope="col">Wheat</th>
+      <th scope="col">Rice</th>
+      <th scope="col">Combo</th>
+
+    </tr>
+  </thead>
+  <tbody class="table-body">
+
+  </tbody>
+</table>
+
+
+
 
 {% endblock content %}
